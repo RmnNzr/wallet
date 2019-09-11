@@ -4,12 +4,20 @@ from .models import Expense, Income, CustomUser
 
 
 class CustomUserSerializer(ModelSerializer):
-    expenses = serializers.StringRelatedField(many=True, read_only=True)
-    incomes = serializers.StringRelatedField(many=True, read_only=True)
+    expenses = serializers.StringRelatedField(many=True,
+                                              read_only=True)
+    incomes = serializers.StringRelatedField(many=True,
+                                             read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'wallet', 'email', 'expenses', 'incomes']
+        fields = [
+            'username',
+            'wallet',
+            'email',
+            'expenses',
+            'incomes'
+        ]
 
 
 class ExpenseSerializer(ModelSerializer):
