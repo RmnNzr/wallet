@@ -6,6 +6,7 @@ from rest_framework import status
 from .models import Expense, Income
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from datetime import datetime, timedelta
 # Create your views here.
 
 
@@ -22,19 +23,29 @@ class ExpenseView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def change_wallet(self, user, value):
+        user.wallet -= int(value)
+        user.save()
+
     def post(self, request):
         serializer = ExpenseSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
+            self.change_wallet(request.user, request.data['value'])
             return Response(serializer.data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        expenses = Expense.objects.filter(user=request.user)
+        from_date = request.data['from'] if 'from' in request.data else datetime.now() - timedelta(days=30)
+        to_date = request.data['to'] if 'to' in request.data else datetime.now()
+        duration_date = [from_date, to_date]
+        expenses = Expense.objects.filter(user=request.user, date__range=duration_date)
         if 'text' in request.data:
             expenses = expenses.filter(text=request.data['text'])
+        if 'value' in request.data:
+            expenses = expenses.filter(value=request.data['value'])
         serializer = ExpenseSerializer(instance=expenses, many=True)
         return Response(serializer.data)
 
@@ -43,18 +54,28 @@ class IncomeView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    def change_wallet(self, this_user, value):
+        this_user.wallet += int(value)
+        this_user.save()
+
     def post(self, request):
         serializer = IncomeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
+            self.change_wallet(request.user, request.data['value'])
             return Response(serializer.data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.error,
                         status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        incomes = Income.objects.filter(user=request.user)
+        from_date = request.data['from'] if 'from' in request.data else datetime.now() - timedelta(days=30)
+        to_date = request.data['to'] if 'to' in request.data else datetime.now()
+        duration_date = [from_date, to_date]
+        incomes = Income.objects.filter(user=request.user, date__range=duration_date)
         if 'text' in request.data:
             incomes = incomes.filter(text=request.data['text'])
+        if 'value' in request.data:
+            incomes = incomes.fitler(value=request.data['value'])
         serializer = IncomeSerializer(instance=incomes, many=True)
         return Response(serializer.data)
