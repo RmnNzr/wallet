@@ -20,7 +20,7 @@ class Expense(models.Model):
                              related_name='expenses')
 
     def __str__(self):
-        return self.text
+        return "%s ---- %s" % (self.user, self.text)
 
 
 class Income(models.Model):
@@ -33,4 +33,4 @@ class Income(models.Model):
                              related_name='incomes')
 
     def __str__(self):
-        return self.text
+        return "%s ---- %s" % (self.user, self.text)
