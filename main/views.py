@@ -19,13 +19,11 @@ from .forms import NewForm
 def userRegister(request):
     form = NewForm(request.POST)
     if form.is_valid():
-        current_user = form.save()
-        current_token = Token(current_user)
-        key = current_token.key
+        _, this_token = form.save()
         return JsonResponse({
             'username': request.POST['username'],
             'password': request.POST['password1'],
-            'key': key
+            'token': this_token.key
         })
     return JsonResponse({
         'err': form.errors
