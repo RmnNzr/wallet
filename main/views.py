@@ -9,13 +9,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
 from .serialziers import ExpenseSerializer, IncomeSerializer, CustomUserSerializer
 from .models import Expense, Income
 from .forms import NewForm
 # Create your views here.
 
 @csrf_exempt
+@api_view(['POST'])
 def userRegister(request):
     form = NewForm(request.POST)
     if form.is_valid():
