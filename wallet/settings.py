@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'h-nsseahz$xcxr!l1(y_bobmt!0o1__y8%0sd5s6iv*_)(3mtj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 AUTH_USER_MODEL = "main.CustomUser"
 
@@ -82,8 +82,8 @@ DATABASES = {
         'NAME': 'wallet',
         'USER': 'armin',
         'PASSWORD': 'visiondatabase',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'my_db',
+        'PORT': '5432',
     }
 }
 
