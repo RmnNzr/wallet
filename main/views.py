@@ -63,7 +63,8 @@ class ExpenseView(APIView):
     def get(self, request):
         from_date = request.data['from'] if 'from' in request.data \
                                         else datetime.now() - timedelta(days=30)
-        to_date = request.data['to'] if 'to' in request.data else datetime.now()
+        to_date = request.data['to'] if 'to' in request.data \
+                                    else datetime.now()
         duration_date = [from_date, to_date]
         expenses = Expense.objects.filter(user=request.user, date__range=duration_date)
         if 'text' in request.data:
@@ -93,8 +94,10 @@ class IncomeView(APIView):
                         status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        from_date = request.data['from'] if 'from' in request.data else datetime.now() - timedelta(days=30)
-        to_date = request.data['to'] if 'to' in request.data else datetime.now()
+        from_date = request.data['from'] if 'from' in request.data \
+                                        else datetime.now() - timedelta(days=30)
+        to_date = request.data['to'] if 'to' in request.data \
+                                    else datetime.now()
         duration_date = [from_date, to_date]
         incomes = Income.objects.filter(user=request.user, date__range=duration_date)
         if 'text' in request.data:
