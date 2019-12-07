@@ -1,0 +1,17 @@
+db:
+  image: postgres
+  environment:
+    - POSTGRES_USER=armin
+    - POSTGRES_PASSWORD=visiondatabase
+    - POSTGRES_DB=walet
+app_wallet:
+  build: wallet/
+  links:
+    - db:my_db
+  expose:
+    - 8000
+  restart: always
+  environment:
+    VIRTUAL_HOST: localhost 
+    VIRTUAL_PORT: 8000
+   
