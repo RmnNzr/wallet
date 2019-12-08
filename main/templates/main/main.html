@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<h3>Available Api's</h3><br />
+<pre>
+.../api/myaccount :<br>
+		Authentication:
+		Token authentication
+		GET :
+			output : datail of user such as username, email, ...
+				and incomes and expense in last month
+
+.../api/expense : <br>
+		change user's wallet.
+
+		Authetication:
+			Token authentication
+
+		POST :
+			input : text, value, date(optional)
+			output : this expense, status=201
+
+		GET :
+			input : text(optional), value(optional),
+				from(optional, defualt=last month), to(optional, defualt=now)
+			output : current user's expenses
+
+.../api/income : <br>
+		change user's wallet.
+
+		Authetication:
+			Token authentication
+
+		POST :
+			input : text, value, date(optional)
+			output : this income, status=201
+
+		GET :
+			input : text(optional), value(optional),
+				from(optional, defualt=last month), to(optional, defualt=now)
+			output : current user's incomes
+.../api/register : <br>
+		register user
+
+		POST :
+			input : username, password1, password2
+			output : username, password, token
+</pre>
+</body>
+</html>

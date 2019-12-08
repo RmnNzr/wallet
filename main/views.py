@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 # from django.shortcuts import render
 # from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,6 +16,12 @@ from .serialziers import ExpenseSerializer, IncomeSerializer, CustomUserSerializ
 from .models import Expense, Income
 from .forms import NewForm
 # Create your views here.
+
+
+def main(request):
+    return render(request=request,
+                  template_name="main/main.html")
+
 
 @csrf_exempt
 @api_view(['POST'])
